@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mundo del Fútbol — Proyecto Final</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HEADER / NAV -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo">⚽</div>
+      <div>
+        <div class="brand-name">Mundo del Fútbol</div>
+        <div class="brand-sub">Proyecto Final • Grupo de 2</div>
+      </div>
+    </div>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="menu">☰</button>
+
+    <nav id="nav" class="nav">
+      <a href="#home">Inicio</a>
+      <a href="#login">Login</a>
+      <a href="#dashboard">Usuario</a>
+      <a href="#options">Opciones</a>
+      <a href="#galeria">Galería</a>
+      <a href="#equipos">Equipos</a>
+      <a href="#estadisticas">Estadísticas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- BANNER -->
+  <section id="home" class="banner">
+    <div class="banner-inner">
+      <h1>Bienvenido a Mundo del Fútbol</h1>
+      <p>Explora estadísticas, equipos, galería y más en un solo lugar</p>
+      <a class="btn" href="#login">Iniciar sesión</a>
+    </div>
+  </section>
+
+  <!-- LOGIN -->
+  <section id="login" class="section">
+    <div class="card">
+      <h2>Iniciar Sesión</h2>
+      <form onsubmit="login(event)">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+        
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+
+        <div class="row">
+          <button class="btn" type="submit">Ingresar</button>
+          <button class="btn ghost" type="button" onclick="fillDummy()">Demo</button>
+        </div>
+
+        <p id="loginError" class="small muted"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="section hidden">
+    <div class="card">
+      <div class="dash-top">
+        <div>
+          <h2 id="userName">Usuario</h2>
+          <p id="userEmail" class="muted">correo@ejemplo.com</p>
+        </div>
+        <button class="btn" onclick="logout()">Cerrar sesión</button>
+      </div>
+
+      <div class="dash-grid">
+        <div class="widget">
+          <h4>Último acceso</h4>
+          <p id="lastLogin">—</p>
+        </div>
+        <div class="widget">
+          <h4>Progreso</h4>
+          <p id="progress">20%</p>
+        </div>
+        <div class="widget">
+          <h4>Mensajes</h4>
+          <p>Ninguno</p>
+        </div>
+      </div>
+
+      <hr>
+      
+      <h3>Accesos rápidos</h3>
+      <div class="links-grid">
+        <a class="card-link" href="#equipos">Equipos</a>
+        <a class="card-link" href="#galeria">Galería</a>
+        <a class="card-link" href="#estadisticas">Estadísticas</a>
+        <a class="card-link" href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTIONS -->
+  <section id="options" class="section">
+    <div class="card">
+      <h2>Opciones del Proyecto</h2>
+      <div class="grid-4">
+        <div class="opt">
+          <h4>Perfil</h4>
+          <p class="muted">Datos del usuario</p>
+        </div>
+        <div class="opt">
+          <h4>Estadísticas</h4>
+          <p class="muted">Tabla dinámica</p>
+        </div>
+        <div class="opt">
+          <h4>Galería</h4>
+          <p class="muted">Imágenes</p>
+        </div>
+        <div class="opt">
+          <h4>Opciones</h4>
+          <p class="muted">Accesos rápidos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" class="section">
+    <h2>Galería de Equipos</h2>
+    <div class="galeria">
+      <img src="https://i.imgur.com/4ZQZ4F4.jpeg" alt="Partido de fútbol 1">
+      <img src="https://i.imgur.com/QsV9JmA.jpeg" alt="Partido de fútbol 2">
+      <img src="https://i.imgur.com/NngLt0W.jpeg" alt="Partido de fútbol 3">
+      <img src="https://i.imgur.com/1R0pC7s.jpeg" alt="Partido de fútbol 4">
+    </div>
+  </section>
+
+  <!-- CARRUSEL -->
+  <section id="equipos" class="section">
+    <div class="card">
+      <h2>Equipos Internacionales</h2>
+      <div class="carousel">
+        <div class="slide">Real Madrid</div>
+        <div class="slide">Barcelona</div>
+        <div class="slide">Manchester City</div>
+        <div class="slide">Bayern Múnich</div>
+      </div>
+    </div>
+  </section>
+
