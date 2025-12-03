@@ -152,3 +152,65 @@
     </div>
   </section>
 
+  <!-- ESTADÍSTICAS -->
+  <section id="estadisticas" class="section">
+    <div class="card">
+      <h2>Estadísticas de Jugadores</h2>
+      <table class="tabla" id="tablaStats">
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Goles</th>
+            <th>Asistencias</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="row">
+        <button class="btn" onclick="agregarDato()">Agregar Dato</button>
+        <button class="btn ghost" onclick="reiniciarTabla()">Reiniciar Tabla</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section id="video" class="section">
+    <div class="card">
+      <h2>Video Destacado</h2>
+      <div class="video-container">
+        <iframe 
+          src="https://www.youtube.com/embed/gSeieqfwZBk" 
+          title="Video de fútbol destacado"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="section">
+    <div class="card">
+      <h2>Contacto</h2>
+      <form onsubmit="enviarFormulario(event)">
+        <label>Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+        
+        <label>Correo electrónico</label>
+        <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" required>
+        
+        <button class="btn" type="submit">Enviar Mensaje</button>
+      </form>
+      <p id="respuesta" class="small"></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Mundo del Fútbol — Proyecto Final • Grupo de 2 • 2025</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
