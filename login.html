@@ -30,7 +30,8 @@
       
       <div id="loginError" class="error-message"></div>
       
-      <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+      <!-- CAMBIOS IMPORTANTES AQUÍ: -->
+      <form id="loginForm" class="login-form" onsubmit="return login(event)">
         <div class="form-group">
           <label for="email">Correo electrónico</label>
           <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
@@ -50,7 +51,8 @@
         </div>
         
         <button type="submit" class="login-btn">Iniciar Sesión</button>
-        <button type="button" class="demo-btn" onclick="fillDemoCredentials()">Usar Credenciales Demo</button>
+        <!-- CAMBIO AQUÍ TAMBIÉN: -->
+        <button type="button" class="demo-btn" onclick="fillDummy()">Usar Credenciales Demo</button>
       </form>
       
       <div class="login-footer">
@@ -61,93 +63,32 @@
   </main>
 
   <script>
-    // Función para manejar el login
-    function handleLogin(e) {
-      e.preventDefault();
+    // Verificación de sesión para login.html
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isLogout = urlParams.get('logout') === 'true';
       
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const rememberMe = document.getElementById('rememberMe').checked;
-      const errorElement = document.getElementById('loginError');
+      console.log('Login page loaded, logout param:', isLogout);
       
-      // Validación básica
-      if (!email || !password) {
-        showError("Por favor, completa todos los campos.");
-        return;
-      }
-      
-      if (!validateEmail(email)) {
-        showError("Por favor, ingresa un correo electrónico válido.");
-        return;
-      }
-      
-      // Simulación de login exitoso
-      const userData = {
-        email: email,
-        name: email.split('@')[0] || 'Usuario',
-        loginTime: new Date().toISOString(),
-        remember: rememberMe
-      };
-      
-      // Guardar en localStorage
-      localStorage.setItem('userData', JSON.stringify(userData));
-      localStorage.setItem('isLoggedIn', 'true');
-      
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', email);
+      // Solo redirigir si NO viene de logout
+      if (!isLogout) {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        const hasUserEmail = sessionStorage.getItem('userEmail');
+        
+        if (isLoggedIn || hasUserEmail) {
+          console.log('Redirigiendo automáticamente a dashboard...');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 500);
+        }
       } else {
-        localStorage.removeItem('rememberedEmail');
-      }
-      
-      // Redirigir al dashboard
-      window.location.href = 'dashboard.html';
-    }
-    
-    // Función para llenar credenciales demo
-    function fillDemoCredentials() {
-      document.getElementById('email').value = 'estudiante@demo.com';
-      document.getElementById('password').value = '123456';
-      document.getElementById('rememberMe').checked = true;
-      
-      const errorElement = document.getElementById('loginError');
-      errorElement.style.display = 'block';
-      errorElement.style.background = '#e8f5e9';
-      errorElement.style.color = '#2e7d32';
-      errorElement.textContent = 'Credenciales demo cargadas. Haz clic en "Iniciar Sesión".';
-    }
-    
-    // Función para mostrar errores
-    function showError(message) {
-      const errorElement = document.getElementById('loginError');
-      errorElement.textContent = message;
-      errorElement.style.display = 'block';
-      errorElement.style.background = '#ffebee';
-      errorElement.style.color = '#c62828';
-      
-      setTimeout(() => {
-        errorElement.style.display = 'none';
-      }, 5000);
-    }
-    
-    // Validar email
-    function validateEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
-    }
-    
-    // Cargar email recordado al cargar la página
-    window.addEventListener('load', function() {
-      const rememberedEmail = localStorage.getItem('rememberedEmail');
-      if (rememberedEmail) {
-        document.getElementById('email').value = rememberedEmail;
-        document.getElementById('rememberMe').checked = true;
-      }
-      
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      if (isLoggedIn === 'true') {
-        window.location.href = 'dashboard.html';
+        // Si viene de logout, limpiar parámetro de URL
+        history.replaceState({}, document.title, window.location.pathname);
       }
     });
   </script>
+  
+  <!-- AGREGAR ESTA LÍNEA: -->
+  <script src="script.js"></script>
 </body>
 </html>

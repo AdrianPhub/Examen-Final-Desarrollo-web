@@ -3,21 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mundo del Fútbol — Proyecto Final</title>
+  <title>Mundo del Fútbol - Dashboard</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
   <!-- HEADER / NAV -->
   <header class="header">
     <div class="brand">
       <div class="logo">⚽</div>
       <div>
         <div class="brand-name">Mundo del Fútbol</div>
-        <div class="brand-sub">Proyecto Final • Grupo de 2</div>
+        <div class="brand-sub" id="userEmailDisplay">Usuario</div>
       </div>
     </div>
 
@@ -25,48 +24,27 @@
 
     <nav id="nav" class="nav">
       <a href="#home">Inicio</a>
-      <a href="#login">Login</a>
-      <a href="#dashboard">Usuario</a>
       <a href="#options">Opciones</a>
       <a href="#galeria">Galería</a>
       <a href="#equipos">Equipos</a>
       <a href="#estadisticas">Estadísticas</a>
+      <a href="#video">Video</a>
       <a href="#contacto">Contacto</a>
+      <a href="#" onclick="return logout()" style="color: #ff6b6b;">Cerrar Sesión</a>
     </nav>
   </header>
 
-  <!-- BANNER -->
+  <!-- BANNER DE BIENVENIDA -->
   <section id="home" class="banner">
     <div class="banner-inner">
-      <h1>Bienvenido a Mundo del Fútbol</h1>
-      <p>Explora estadísticas, equipos, galería y más en un solo lugar</p>
-      <a class="btn" href="#login">Iniciar sesión</a>
+      <h1 id="welcomeMessage">Bienvenido al Dashboard</h1>
+      <p id="lastLoginDisplay">Último acceso: Cargando...</p>
+      <a class="btn" href="#estadisticas">Ver Estadísticas</a>
     </div>
   </section>
 
-  <!-- LOGIN -->
-  <section id="login" class="section">
-    <div class="card">
-      <h2>Iniciar Sesión</h2>
-      <form onsubmit="login(event)">
-        <label>Correo electrónico</label>
-        <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
-        
-        <label>Contraseña</label>
-        <input type="password" id="password" placeholder="••••••••" required>
-
-        <div class="row">
-          <button class="btn" type="submit">Ingresar</button>
-          <button class="btn ghost" type="button" onclick="fillDummy()">Demo</button>
-        </div>
-
-        <p id="loginError" class="small muted"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section id="dashboard" class="section hidden">
+  <!-- DASHBOARD PRINCIPAL -->
+  <section class="section">
     <div class="card">
       <div class="dash-top">
         <div>
@@ -86,8 +64,12 @@
           <p id="progress">20%</p>
         </div>
         <div class="widget">
-          <h4>Mensajes</h4>
-          <p>Ninguno</p>
+          <h4>Notificaciones</h4>
+          <p id="notifications">3 nuevas</p>
+        </div>
+        <div class="widget">
+          <h4>Favoritos</h4>
+          <p id="favorites">5 equipos</p>
         </div>
       </div>
 
@@ -98,6 +80,7 @@
         <a class="card-link" href="#equipos">Equipos</a>
         <a class="card-link" href="#galeria">Galería</a>
         <a class="card-link" href="#estadisticas">Estadísticas</a>
+        <a class="card-link" href="#video">Video Destacado</a>
         <a class="card-link" href="#contacto">Contacto</a>
       </div>
     </div>
@@ -181,11 +164,14 @@
       <div class="video-container">
         <iframe 
           src="https://www.youtube.com/embed/gSeieqfwZBk" 
-          title="Video de fútbol destacado"
+          title="Momentos Épicos del Fútbol"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           allowfullscreen>
         </iframe>
       </div>
+      <p class="muted" style="margin-top: 1rem; text-align: center;">
+        Momentos épicos e increíbles del fútbol mundial
+      </p>
     </div>
   </section>
 
@@ -209,8 +195,37 @@
   <!-- FOOTER -->
   <footer class="footer">
     <p>Mundo del Fútbol — Proyecto Final • Grupo de 2 • 2025</p>
+    <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+      Sesión activa: <span id="sessionTime"></span>
+    </p>
   </footer>
 
-  <script src="script.js"></script>
+<!-- dashboard.html - antes de </body> -->
+<script>
+  // Verificar sesión en dashboard
+  document.addEventListener('DOMContentLoaded', function() {
+    const userEmail = sessionStorage.getItem('userEmail');
+    
+    if (!userEmail) {
+      alert('No hay sesión activa. Redirigiendo al login...');
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    // Cargar datos del usuario
+    const userName = sessionStorage.getItem('userName') || 'Usuario';
+    const lastLogin = sessionStorage.getItem('lastLogin') || '—';
+    
+    // Actualizar UI
+    document.getElementById('userName').textContent = userName;
+    document.getElementById('userEmail').textContent = userEmail;
+    document.getElementById('userEmailDisplay').textContent = userEmail;
+    document.getElementById('welcomeMessage').textContent = `¡Bienvenido, ${userName}!`;
+    document.getElementById('lastLogin').textContent = lastLogin;
+    document.getElementById('lastLoginDisplay').textContent = `Último acceso: ${lastLogin}`;
+  });
+</script>
+
+<script src="script.js"></script>
 </body>
 </html>
