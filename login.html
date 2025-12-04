@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mundo del Fútbol - Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+  <header class="login-header">
+    <div class="brand">
+      <div class="logo">⚽</div>
+      <div>
+        <div class="brand-name">Mundo del Fútbol</div>
+        <div class="brand-sub">Proyecto Final • Grupo de 2</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo">⚽</div>
+        <h1>Bienvenido</h1>
+        <p>Accede a tu cuenta para explorar el mundo del fútbol</p>
+      </div>
+      
+      <div id="loginError" class="error-message"></div>
+      
+      <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        
+        <div class="login-options">
+          <label class="remember">
+            <input type="checkbox" id="rememberMe">
+            <span>Recordarme</span>
+          </label>
+          <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        </div>
+        
+        <button type="submit" class="login-btn">Iniciar Sesión</button>
+        <button type="button" class="demo-btn" onclick="fillDemoCredentials()">Usar Credenciales Demo</button>
+      </form>
+      
+      <div class="login-footer">
+        <p>© 2025 Mundo del Fútbol. Todos los derechos reservados.</p>
+        <p>Este es un proyecto educativo demostrativo.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Función para manejar el login
+    function handleLogin(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const rememberMe = document.getElementById('rememberMe').checked;
+      const errorElement = document.getElementById('loginError');
+      
+      // Validación básica
+      if (!email || !password) {
+        showError("Por favor, completa todos los campos.");
+        return;
+      }
+      
+      if (!validateEmail(email)) {
+        showError("Por favor, ingresa un correo electrónico válido.");
+        return;
+      }
+      
+      // Simulación de login exitoso
+      const userData = {
+        email: email,
+        name: email.split('@')[0] || 'Usuario',
+        loginTime: new Date().toISOString(),
+        remember: rememberMe
+      };
+      
+      // Guardar en localStorage
+      localStorage.setItem('userData', JSON.stringify(userData));
+      localStorage.setItem('isLoggedIn', 'true');
+      
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
+      
+      // Redirigir al dashboard
+      window.location.href = 'dashboard.html';
+    }
+    
+    // Función para llenar credenciales demo
+    function fillDemoCredentials() {
+      document.getElementById('email').value = 'estudiante@demo.com';
+      document.getElementById('password').value = '123456';
+      document.getElementById('rememberMe').checked = true;
+      
+      const errorElement = document.getElementById('loginError');
+      errorElement.style.display = 'block';
+      errorElement.style.background = '#e8f5e9';
+      errorElement.style.color = '#2e7d32';
+      errorElement.textContent = 'Credenciales demo cargadas. Haz clic en "Iniciar Sesión".';
+    }
+    
+    // Función para mostrar errores
+    function showError(message) {
+      const errorElement = document.getElementById('loginError');
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      errorElement.style.background = '#ffebee';
+      errorElement.style.color = '#c62828';
+      
+      setTimeout(() => {
+        errorElement.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Validar email
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+    
+    // Cargar email recordado al cargar la página
+    window.addEventListener('load', function() {
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      if (rememberedEmail) {
+        document.getElementById('email').value = rememberedEmail;
+        document.getElementById('rememberMe').checked = true;
+      }
+      
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn === 'true') {
+        window.location.href = 'dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>
